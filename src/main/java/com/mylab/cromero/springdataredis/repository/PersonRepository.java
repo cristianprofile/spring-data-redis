@@ -3,11 +3,14 @@ package com.mylab.cromero.springdataredis.repository;
 import com.mylab.cromero.springdataredis.domain.Person;
 import org.springframework.data.repository.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PersonRepository extends Repository<Person, String> {
 
     Optional<Person> findOne(String id);
+
+    List<Person> findByFirstname(String firstname);
 
     Person save(Person person);
 
@@ -22,6 +25,8 @@ public interface PersonRepository extends Repository<Person, String> {
     void deleteAll();
 
     long count();
+
+
 
 
 }

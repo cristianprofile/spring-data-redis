@@ -3,6 +3,7 @@ package com.mylab.cromero.springdataredis.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
+import org.springframework.data.redis.core.index.Indexed;
 
 import java.util.List;
 
@@ -11,7 +12,9 @@ public class Person {
 
     @Id
     private String id;
+    @Indexed
     private String firstname;
+    @Indexed
     private String lastname;
 
     List<Address> adress;

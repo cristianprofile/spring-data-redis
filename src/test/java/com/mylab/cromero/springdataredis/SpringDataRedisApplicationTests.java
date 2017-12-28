@@ -46,6 +46,40 @@ public class SpringDataRedisApplicationTests {
     }
 
 
+
+    @Test
+    public void findByFirsName() {
+
+        List<Person> people = personRepository.findByFirstname("Cristian");
+
+        assertThat(people).isEmpty();
+
+        Person person = new Person();
+        person.setFirstname("Cristian");
+        person.setLastname("Romero");
+        List<Address> addresses = new ArrayList<Address>();
+
+        Address address = new Address();
+        address.setCity("Madrid");
+        address.setStreet("Gran via");
+        address.setZipCode("289156");
+        addresses.add(address);
+
+        person.setAdress(addresses);
+
+        //Insert new Person
+        Person savedPerson = personRepository.save(person);
+        assertThat(savedPerson.getId()).isNotNull();
+
+        people = personRepository.findByFirstname("Cristian");
+
+        assertThat(people).isNotEmpty().hasSize(1);
+
+    }
+
+
+
+
     @Test
     public void testScript() {
 
