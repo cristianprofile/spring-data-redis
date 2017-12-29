@@ -10,6 +10,13 @@ public interface PersonRepository extends Repository<Person, String> {
 
     Optional<Person> findOne(String id);
 
+
+
+    // it is only allowed to use properties with @Indexed annotation.
+    // Please make sure properties used in finder methods are set up for indexing.
+    List<Person> findByFirstnameAndPhone_Number(String firstname,String phoneNumber);
+
+
     List<Person> findByFirstname(String firstname);
 
     Person save(Person person);

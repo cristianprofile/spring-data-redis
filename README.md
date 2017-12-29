@@ -82,6 +82,17 @@ country=Madrid                                                          <2>
 ```
 
 
+##Be Caution with Redis ##
+
+Maintaining complex types and index structures stands and falls with its usage. Please consider the following:
+
+* Nested document structures increase object <> hash conversion overhead.
+* Consider having only those indexes you really need instead of indexing each and every property.
+* Pagination is a costly operation since the total number of elements is calculated before returning just a slice of data.
+* Pagination gives no guarantee on information as elements might be added, moved or removed.
+
+
+
 # Testing Redis Script (to be able to test transactions without race condition problem delegate redis Scripts)
 
 Redis Scripting

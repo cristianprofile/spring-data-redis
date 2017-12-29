@@ -1,7 +1,10 @@
 package com.mylab.cromero.springdataredis.domain;
 
+import org.springframework.data.redis.core.index.Indexed;
+
 public class Phone {
 
+    @Indexed
     private String number;
     private String description;
 

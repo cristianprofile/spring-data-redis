@@ -82,6 +82,10 @@ public class SpringDataRedisApplicationTests {
 
         assertThat(people).isNotEmpty().hasSize(1);
 
+        people = personRepository.findByFirstnameAndPhone_Number("Cristian", "3242423424");
+
+        assertThat(people).isNotEmpty().hasSize(1);
+
     }
 
 
