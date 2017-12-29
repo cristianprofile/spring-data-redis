@@ -2,6 +2,7 @@ package com.mylab.cromero.springdataredis;
 
 import com.mylab.cromero.springdataredis.domain.Address;
 import com.mylab.cromero.springdataredis.domain.Person;
+import com.mylab.cromero.springdataredis.domain.Phone;
 import com.mylab.cromero.springdataredis.repository.PersonRepository;
 import com.mylab.cromero.springdataredis.repository.PersonScript;
 import org.junit.AfterClass;
@@ -61,11 +62,17 @@ public class SpringDataRedisApplicationTests {
 
         Address address = new Address();
         address.setCity("Madrid");
-        address.setStreet("Gran via");
-        address.setZipCode("289156");
+        address.setCountry("Leganes");
+
         addresses.add(address);
 
         person.setAdress(addresses);
+
+        Phone phone = new Phone();
+        phone.setNumber("3242423424");
+        phone.setDescription("cell number");
+
+        person.setPhone(phone);
 
         //Insert new Person
         Person savedPerson = personRepository.save(person);
@@ -116,11 +123,20 @@ public class SpringDataRedisApplicationTests {
 
         Address address = new Address();
         address.setCity("Madrid");
-        address.setStreet("Gran via");
-        address.setZipCode("289156");
+        address.setCountry("Leganes");
         addresses.add(address);
 
+
+
+
+
         person.setAdress(addresses);
+
+        Phone phone = new Phone();
+        phone.setNumber("3242423424");
+        phone.setDescription("cell number");
+
+        person.setPhone(phone);
 
         //Insert new Person
         Person savedPerson = personRepository.save(person);
@@ -139,13 +155,21 @@ public class SpringDataRedisApplicationTests {
         person.setLastname("Rodriguez");
         addresses = new ArrayList<Address>();
 
+
         address = new Address();
         address.setCity("Barcelona");
-        address.setStreet("Gran via");
-        address.setZipCode("229156");
+        address.setCountry("La Rambla");
         addresses.add(address);
 
+
         person.setAdress(addresses);
+
+
+        phone = new Phone();
+        phone.setNumber("444444");
+        phone.setDescription("cell number 2");
+
+        person.setPhone(phone);
 
         savedPerson = personRepository.save(person);
 

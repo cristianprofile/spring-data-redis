@@ -1,6 +1,7 @@
 package com.mylab.cromero.springdataredis.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Reference;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
@@ -9,18 +10,17 @@ import java.util.List;
 
 @RedisHash("persons")
 public class Person {
+    @Id private String id;
 
-    @Id
-    private String id;
-    @Indexed
-    private String firstname;
-    @Indexed
-    private String lastname;
+    @Indexed private String firstname;
 
-    List<Address> adress;
+    @Indexed private String lastname;
 
-    @TimeToLive
-    private Long expiration;
+    @Reference private List<Address> adress;
+
+    private Phone phone;
+
+    @TimeToLive private Long expiration;
 
     public String getId() {
         return id;
@@ -53,6 +53,10 @@ public class Person {
     public void setAdress(List<Address> adress) {
         this.adress = adress;
     }
+
+    public Phone getPhone() { return phone; }
+
+    public void setPhone(Phone phone) { this.phone = phone; }
 
     public Long getExpiration() {
         return expiration;

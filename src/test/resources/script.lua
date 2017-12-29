@@ -1,5 +1,3 @@
- //Script return true when we call more than 3 times
-
 if redis.call("EXISTS",KEYS[1]) == 1 then
      local ocurrences=redis.call("INCR",KEYS[1])
      if ocurrences>3 then

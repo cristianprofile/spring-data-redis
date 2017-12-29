@@ -19,12 +19,6 @@ import java.net.URISyntaxException;
 
 public class SpringDataRedisApplication {
 
-
-
-
-
-
-
 	@Bean
 	public DefaultRedisScript<Boolean> booleanDefaultRedisScript(ResourceLoader
 			resourceLoader) {

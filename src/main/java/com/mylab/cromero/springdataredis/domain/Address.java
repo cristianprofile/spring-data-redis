@@ -1,15 +1,27 @@
 package com.mylab.cromero.springdataredis.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
+
+@RedisHash("addresses")
 public class Address {
 
-    String zipCode, city, street;
 
-    public String getZipCode() {
-        return zipCode;
+    @Id
+    private String id;
+
+    private  String city;
+
+    @Indexed
+    private String country;
+
+    public String getId() {
+        return id;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCity() {
@@ -20,11 +32,12 @@ public class Address {
         this.city = city;
     }
 
-    public String getStreet() {
-        return street;
+    public String getCountry() {
+        return country;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setCountry(String country) {
+        this.country = country;
     }
+
 }
