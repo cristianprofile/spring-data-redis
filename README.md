@@ -1,5 +1,5 @@
 # spring-data-redis
-Spring Data Redis is a respository for Testing Repositories and Script purpose.
+Spring Data Redis is a respository for Testing Repositories and Script features.
 
 
 # Testing typical Spring data @Repository feature
@@ -98,5 +98,47 @@ Maintaining complex types and index structures stands and falls with its usage. 
 Redis Scripting
 Redis versions 2.6 and higher provide support for execution of Lua scripts through the eval and evalsha commands. Spring Data Redis provides a high-level abstraction for script execution that handles serialization and automatically makes use of the Redis script cache.
 
+You submit the script which is executed in an atomic way. It's guaranteed by the single threaded, "stop the world" approach. No other script or Redis command will be executed while the script is being executed. Consequently EVAL also has a limitation: scripts must be small and fast to prevent blocking other clients.
+
+
 See test folder with custom test of a simple lua file with a script returning true when is called more than 3 times with the same key
 
+**script.lua**
+
+```
+
+if redis.call("EXISTS",KEYS[1]) == 1 then
+     local ocurrences=redis.call("INCR",KEYS[1])
+     if ocurrences>3 then
+        return true
+     else
+        return false
+     end
+
+   else
+     redis.call("SET",KEYS[1],1)
+     return false
+   end
+```
+
+
+```java
+@Bean
+	public DefaultRedisScript<Boolean> booleanDefaultRedisScript(ResourceLoader
+			resourceLoader) {
+
+		DefaultRedisScript<Boolean> script = new DefaultRedisScript<>();
+		Resource resourceLua = resourceLoader.getResource("classpath:/script.lua");
+		script.setLocation(resourceLua);
+		script.setResultType(Boolean.class);
+		return script;
+	}
+
+
+	@Bean
+	public ScriptExecutor<String> scriptExecutor(RedisTemplate redisTemplate, ResourceLoader
+			resourceLoader) throws URISyntaxException, IOException {
+		ScriptExecutor<String> scriptExecutor = new DefaultScriptExecutor<String>(redisTemplate);
+		return scriptExecutor;
+	}
+```
