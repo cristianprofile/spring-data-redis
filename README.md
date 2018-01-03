@@ -123,7 +123,7 @@ if redis.call("EXISTS",KEYS[1]) == 1 then
 
 
 ```java
-@Bean
+    @Bean
 	public DefaultRedisScript<Boolean> booleanDefaultRedisScript(ResourceLoader
 			resourceLoader) {
 
@@ -141,4 +141,33 @@ if redis.call("EXISTS",KEYS[1]) == 1 then
 		ScriptExecutor<String> scriptExecutor = new DefaultScriptExecutor<String>(redisTemplate);
 		return scriptExecutor;
 	}
+	
+	
+	public Boolean isMoreThanThree(String key)
+        {
+    
+            Boolean result = scriptExecutor.execute(booleanDefaultRedisScript, Collections.singletonList(key));
+            return result;
+        }
+```
+
+Test verify when script is called more than three times with the same key value. Calling to script is atomic when
+we use the same redis key. Only one process can write/read with the same key value.
+
+```java
+ //Script return true when we call more than 3 times with the same key
+        Boolean key1 = personScript.isMoreThanThree("key1");
+        assertThat(key1).isFalse();
+        key1 = personScript.isMoreThanThree("key1");
+        assertThat(key1).isFalse();
+        key1 = personScript.isMoreThanThree("key1");
+        assertThat(key1).isFalse();
+
+        //Script return true when we call more than 3 times
+        key1 = personScript.isMoreThanThree("key1");
+        assertThat(key1).isTrue();
+
+        key1 = personScript.isMoreThanThree("key1");
+        assertThat(key1).isTrue();
+
 ```
